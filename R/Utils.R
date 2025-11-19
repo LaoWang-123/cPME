@@ -102,11 +102,10 @@ assemble_delta_gamma_fn <- function(dgamma_coefs, bi_set) {
 #
 #' Title
 #'
-#' @param dgamma_coefs
-#' @param D_bi_set
+#' @param dgamma_coefs coefs
+#' @param D_bi_set D_bi sets
 #'
 #' @returns a function (u,v) to 2x2 matrix
-#' @export
 #'
 #' @examples
 #' assemble_D_delta_gamma_fn(dgamma_coefs,D_bi_set)
@@ -165,13 +164,12 @@ update_gamma_fn <- function(gamma_k, delta_gamma_k, epsilon) {
 # The state_k, we have gamma_k, but we don't have delta gamma^k and D delta gamma^k
 #' Title
 #'
-#' @param state_list
-#' @param gamma_k
-#' @param f2_grad_fn
-#' @param epsilon
+#' @param state_list state_list
+#' @param gamma_k gamma_k
+#' @param f2_grad_fn f2_grad_fn
+#' @param epsilon step to upgrade
 #'
 #' @returns a function (u,v) to 3x2 matrix, named grad_f2k
-#' @export
 #'
 assemble_grad_f2k_from_state <- function(state_list, gamma_k, f2_grad_fn, epsilon) {
   # Determine iteration depth
@@ -230,16 +228,15 @@ assemble_grad_f2k_from_state <- function(state_list, gamma_k, f2_grad_fn, epsilo
 
 # We get ∇f2^k(u,v) from assemble_delta_f2k_from_state function defined previously
 
-# Factory that returns a callable dphi function
-#' Title
+#
+#' Factory that returns a callable dphi function
 #'
-#' @param basis
-#' @param grad_f2k_fun
-#' @param f2_fun
-#' @param rotated
+#' @param basis bi
+#' @param grad_f2k_fun grad_f2k_fun
+#' @param f2_fun f2_fun
+#' @param rotated True or False
 #'
 #' @returns a function (u,v) to 3x1 vector
-#' @export
 #'
 make_dphi_fn <- function(basis, grad_f2k_fun, f2_fun, rotated = FALSE) {
 

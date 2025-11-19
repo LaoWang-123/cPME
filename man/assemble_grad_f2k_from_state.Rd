@@ -7,7 +7,13 @@
 assemble_grad_f2k_from_state(state_list, gamma_k, f2_grad_fn, epsilon)
 }
 \arguments{
-\item{epsilon}{}
+\item{state_list}{state_list}
+
+\item{gamma_k}{gamma_k}
+
+\item{f2_grad_fn}{f2_grad_fn}
+
+\item{epsilon}{step to upgrade}
 }
 \value{
 a function (u,v) to 3x2 matrix, named grad_f2k

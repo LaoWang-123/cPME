@@ -7,7 +7,9 @@
 assemble_D_delta_gamma_fn(dgamma_coefs, D_bi_set)
 }
 \arguments{
-\item{D_bi_set}{}
+\item{dgamma_coefs}{coefs}
+
+\item{D_bi_set}{D_bi sets}
 }
 \value{
 a function (u,v) to 2x2 matrix

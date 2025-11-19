@@ -82,8 +82,8 @@ jacobian_rot_fn <- function(p, q) {
 # ---------------------------
 #' Build all basis sets
 #'
-#' @param Pmax
-#' @param Qmax
+#' @param Pmax default 3
+#' @param Qmax default 3
 #'
 #' @returns a list of basis functions
 #' @export

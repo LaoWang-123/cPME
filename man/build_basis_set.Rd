@@ -7,7 +7,9 @@
 build_basis_set(Pmax, Qmax)
 }
 \arguments{
-\item{Qmax}{}
+\item{Pmax}{default 3}
+
+\item{Qmax}{default 3}
 }
 \value{
 a list of basis functions
