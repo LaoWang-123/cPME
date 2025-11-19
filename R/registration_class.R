@@ -15,6 +15,31 @@
 Registration <- R6::R6Class("Registration",
 
                             public = list(
+                              #' @field f1 Function f1(u, v). The target surface embedding or image.
+                              #' @field f2 Function f2(u, v). The source surface to be warped.
+                              #' @field f2_grad_fn Gradient of f2, a function returning (df/du, df/dv).
+                              #' @field basis_set A list of basis functions used to build the tangent basis.
+                              #' @field Ugrid A data frame of (u, v) evaluation points on [0,1]^2.
+
+                              #' @field bi_set Precomputed basis functions b_i(u,v).
+                              #' @field D_bi_set Precomputed gradients Db_i(u,v).
+
+                              #' @field gamma_k Current reparameterization map γ_k(u,v).
+                              #' @field f2_k Current warped surface f2 ∘ γ_k.
+                              #' @field grad_f2k_fun Current gradient ∇(f2 ∘ γ_k).
+                              #' @field dgamma_coefs Coefficients α_i in δγ = Σ α_i b_i.
+                              #' @field delta_gamma_fn Function δγ_k(u,v).
+                              #' @field Ddelta_gamma_fn Jacobian of δγ_k(u,v).
+
+                              #' @field state_list List storing all iteration states (γ_k, α_k, E_k).
+                              #' @field E_history Numeric vector storing energy values E_k.
+                              #' @field iter Current iteration index.
+
+                              #' @field eps_step Step size for γ update.
+                              #' @field eps_energy Convergence threshold on |E_k - E_{k-1}|.
+                              #' @field max_iter Maximum number of iterations.
+
+                              #' @field folder Optional folder path for autosaving state.
 
                               # ---------------------------------------------------------
                               # Fields (User-provided functions and algorithm settings)
@@ -45,7 +70,6 @@ Registration <- R6::R6Class("Registration",
                               eps_step = NULL,
                               eps_energy = NULL,
                               max_iter = NULL,
-                              step_schedule = NULL,
 
                               # Folder for autosave
                               folder = NULL,
@@ -54,14 +78,28 @@ Registration <- R6::R6Class("Registration",
                               # ---------------------------------------------------------
                               # Initialization
                               # ---------------------------------------------------------
+                              #' @description Initialization of the registration object.
+                              #' Sets user-provided surfaces, gradients, basis functions, and algorithm
+                              #' hyperparameters. Precomputes basis fields and initializes γ_0 and f2_0.
+                              #'
+                              #' @param f1 Function f1(u,v), target surface.
+                              #' @param f2 Function f2(u,v), source surface.
+                              #' @param f2_grad_fn Gradient function of f2.
+                              #' @param basis_set A list of basis functions.
+                              #' @param Ugrid Data frame of (u,v) sample locations.
+                              #' @param eps_step Numeric. Step size for updates.
+                              #' @param eps_energy Numeric. Convergence threshold.
+                              #' @param max_iter Maximum number of iterations.
+                              #' @param folder Folder for autosave (optional).
+                              #' @return The initialized Registration object (invisibly).
+                              #'
                               initialize = function(
     f1, f2, f2_grad_fn,
     basis_set, Ugrid,
     eps_step = 0.05,
     eps_energy = 1e-5,
     max_iter = 100,
-    folder = NULL,
-    step_schedule = NULL) {
+    folder = NULL) {
                                 # =======================
                                 # INITIALIZATION MODE
                                 # =======================
@@ -77,7 +115,6 @@ Registration <- R6::R6Class("Registration",
                                 self$eps_energy = eps_energy
                                 self$max_iter = max_iter
                                 self$folder = folder
-                                self$step_schedule = step_schedule
 
                                 # Precompute basis fields
                                 self$bi_set   <- build_bi_set(basis_set)
@@ -91,6 +128,10 @@ Registration <- R6::R6Class("Registration",
     # ---------------------------------------------------------
     # Initialize iteration state (k = 0)
     # ---------------------------------------------------------
+    #' @description Initialize iteration state for k = 0.
+    #' Builds γ_0, f2_0, initial basis derivatives, α coefficients,
+    #' and stores the first state.
+    #' @return Nothing. Updates internal fields.
     initialize_state = function() {
       gamma_id <- function(u, v) c(u, v)
       self$gamma_k <- gamma_id
@@ -141,15 +182,14 @@ Registration <- R6::R6Class("Registration",
     # ---------------------------------------------------------
     # Perform ONE gradient-descent iteration
     # ---------------------------------------------------------
+    #' @description Perform ONE gradient-descent update step.
+    #' Updates γ_{k+1}, f2_{k+1}, computes energy, convergence check,
+    #' recomputes basis derivatives and coefficients.
+    #' @return The current energy E_k (invisibly).
     step = function() {
 
       # --- 1) Determine step size (either scheduled or eps_step) ---
-      eps <- if (!is.null(self$step_schedule) &&
-                 self$iter < length(self$step_schedule)) {
-        self$step_schedule[self$iter + 1]
-      } else {
-        self$eps_step
-      }
+      eps <- self$eps_step
 
       # --- 2) Update γ^{k+1} = γ_k ∘ (id + eps * δγ_k) ---
       gamma_next <- update_gamma_fn(
@@ -240,6 +280,9 @@ Registration <- R6::R6Class("Registration",
     # ---------------------------------------------------------
     # Run all iterations up to max_iter
     # ---------------------------------------------------------
+    #' @description Run the full optimization loop up to `max_iter`.
+    #' Automatically stops if the energy change falls below `eps_energy`.
+    #' @return Nothing. Updates the entire optimization history.
     run = function() {
       for (i in seq_len(self$max_iter)) {
 
@@ -267,17 +310,24 @@ Registration <- R6::R6Class("Registration",
     # ---------------------------------------------------------
     # Continue optimization from a saved state
     # ---------------------------------------------------------
+    #' @description Continue optimization from a previously saved state.
+    #' Allows overriding step size, schedule, energy threshold, etc.
+    #'
+    #' @param n_steps Number of additional steps to run (optional).
+    #' @param max_iter_total Absolute iteration target (optional).
+    #' @param eps_step Optional override of step size.
+    #' @param step_schedule Optional new step schedule.
+    #' @param eps_energy Optional new convergence tolerance.
+    #' @return Nothing. Continues modifying the registration state.
     continue = function(
     n_steps = NULL,
     max_iter_total = NULL,
     eps_step = NULL,
-    step_schedule = NULL,
     eps_energy = NULL
     ) {
 
       # Parameter overrides
       if (!is.null(eps_step))      self$eps_step <- eps_step
-      if (!is.null(step_schedule)) self$step_schedule <- step_schedule
       if (!is.null(eps_energy))    self$eps_energy <- eps_energy
 
       start_iter <- self$iter
@@ -316,6 +366,8 @@ Registration <- R6::R6Class("Registration",
     # ---------------------------------------------------------
     # Save state to folder as RDS file
     # ---------------------------------------------------------
+    #' @description Save the full registration object into an RDS file.
+    #' @return Nothing. Writes `reg_state.rds` to `self$folder`.
     save_state = function() {
       if (!dir.exists(self$folder)) {
         dir.create(self$folder, recursive = TRUE)
