@@ -80,12 +80,12 @@ jacobian_rot_fn <- function(p, q) {
 # ---------------------------
 # (6) Build all basis sets
 # ---------------------------
-#' Title
+#' Build all basis sets
 #'
-#' @param Pmax 
-#' @param Qmax 
+#' @param Pmax
+#' @param Qmax
 #'
-#' @returns
+#' @returns a list of basis functions
 #' @export
 #'
 #' @examples
@@ -96,11 +96,11 @@ build_basis_set <- function(Pmax, Qmax) {
     for (q in 0:Qmax) {
       # skip the constant mode (p=0, q=0)
       if (p == 0 && q == 0) next
-      
+
       ### Calculate the norm ||\nambla psi_pq||_L2 = pi * cpq * \sqrt(p2+q2)
       cpq <- if (p == 0 && q == 0) 1 else if (p == 0 || q == 0) sqrt(2) else 2
       norm_pq <- pi * abs(cpq) * sqrt(p^2+q^2)
-      
+
       key <- paste(p, q, sep = "_")
       basis_set[[key]] <- list(
         psi   = scalar_basis_fn(p, q),
@@ -124,28 +124,28 @@ build_basis_set <- function(Pmax, Qmax) {
 # Names are "p_q.grad" and "p_q.rot" (both included).
 #' Title
 #'
-#' @param basis_set 
+#' @param basis_set
 #'
-#' @returns
+#' @returns a list of bi set (grad and normalized of scalar basis)
 #' @export
 #'
 #' @examples
 #' bi_set <- build_bi_set(basis_set)
 build_bi_set <- function(basis_set) {
   keys <- sort(names(basis_set))
-  
+
   grad_list <- lapply(keys, function(key) {
     bs <- basis_set[[key]]
     norm_pq <- bs$norm_pq
     function(u, v) bs$grad_psi(u, v) / norm_pq
   })
-  
+
   rot_list <- lapply(keys, function(key) {
     bs <- basis_set[[key]]
     norm_pq <- bs$norm_pq
     function(u, v) bs$rot_grad_psi(u, v) / norm_pq
   })
-  
+
   bi_list <- c(grad_list, rot_list)
   names(bi_list) <- c(paste0(keys, ".grad"), paste0(keys, ".rot"))
   bi_list
@@ -156,32 +156,32 @@ build_bi_set <- function(basis_set) {
 # Names are "p_q.grad" and "p_q.rot" (both included).
 #' Title
 #'
-#' @param basis_set 
+#' @param basis_set
 #'
-#' @returns
+#' @returns a list of D bi sets
 #' @export
 #'
 #' @examples
 #' D_bi_set <- build_D_bi_set(basis_set)
 build_D_bi_set <- function(basis_set) {
   keys <- sort(names(basis_set))
-  
+
   D_grad_list <- lapply(keys, function(key) {
     bs <- basis_set[[key]]
     norm_pq <- bs$norm_pq
     function(u, v) bs$Dgrad_psi(u, v) / norm_pq
   })
-  
+
   D_rot_list <- lapply(keys, function(key) {
     bs <- basis_set[[key]]
     norm_pq <- bs$norm_pq
     function(u, v) bs$Drot_grad_psi(u, v) / norm_pq
   })
-  
-  
+
+
   D_bi_set <- c(D_grad_list, D_rot_list)
   names(D_bi_set) <- c(paste0(keys, ".grad"), paste0(keys, ".rot"))
-  
+
   D_bi_set
 }
 

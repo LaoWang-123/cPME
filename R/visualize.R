@@ -21,13 +21,13 @@ visualize_gamma_grid_static <- function(gamma_fun, n = 25) {
 
 #' Gamma function plot in [0,1]^2
 #'
-#' @param gamma_fun
-#' @param n
-#' @param arrow_color
-#' @param point_color
-#' @param warp_scale
+#' @param gamma_fun the gamma function we want to visualize
+#' @param n grid number
+#' @param arrow_color default tomatc
+#' @param point_color default grey40
+#' @param warp_scale default 1
 #'
-#' @returns
+#' @returns a plot
 #' @export
 #'
 visualize_gamma_scalar_input <- function(gamma_fun, n = 25,

@@ -7,12 +7,6 @@
 make_dphi_fn(basis, grad_f2k_fun, f2_fun, rotated = FALSE)
 }
 \arguments{
-\item{basis}{}
-
-\item{grad_f2k_fun}{}
-
-\item{f2_fun}{}
-
 \item{rotated}{}
 }
 \value{

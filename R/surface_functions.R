@@ -3,12 +3,12 @@
 # ==========================================================
 #' Ganna function factory
 #'
-#' @param mode
-#' @param au
-#' @param av
+#' @param mode mode choice
+#' @param au default 0.3
+#' @param av default 0.25
 #' @param angle
 #'
-#' @returns
+#' @returns a chosen gamma function
 #' @export
 #'
 gamma_function_factory <- function(mode = c("smooth", "rotate", "identity"),

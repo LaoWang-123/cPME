@@ -7,12 +7,6 @@
 assemble_grad_f2k_from_state(state_list, gamma_k, f2_grad_fn, epsilon)
 }
 \arguments{
-\item{state_list}{}
-
-\item{gamma_k}{}
-
-\item{f2_grad_fn}{}
-
 \item{epsilon}{}
 }
 \value{

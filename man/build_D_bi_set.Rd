@@ -9,6 +9,9 @@ build_D_bi_set(basis_set)
 \arguments{
 \item{basis_set}{}
 }
+\value{
+a list of D bi sets
+}
 \description{
 Title
 }

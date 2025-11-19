@@ -9,6 +9,9 @@ build_bi_set(basis_set)
 \arguments{
 \item{basis_set}{}
 }
+\value{
+a list of bi set (grad and normalized of scalar basis)
+}
 \description{
 Title
 }

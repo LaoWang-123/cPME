@@ -12,7 +12,16 @@ gamma_function_factory(
 )
 }
 \arguments{
+\item{mode}{mode choice}
+
+\item{au}{default 0.3}
+
+\item{av}{default 0.25}
+
 \item{angle}{}
+}
+\value{
+a chosen gamma function
 }
 \description{
 Ganna function factory

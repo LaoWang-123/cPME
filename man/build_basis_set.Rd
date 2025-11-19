@@ -2,17 +2,18 @@
 % Please edit documentation in R/basis_functions.R
 \name{build_basis_set}
 \alias{build_basis_set}
-\title{Title}
+\title{Build all basis sets}
 \usage{
 build_basis_set(Pmax, Qmax)
 }
 \arguments{
-\item{Pmax}{}
-
 \item{Qmax}{}
 }
+\value{
+a list of basis functions
+}
 \description{
-Title
+Build all basis sets
 }
 \examples{
 basis_set <- build_basis_set(3,3)

@@ -13,7 +13,18 @@ visualize_gamma_scalar_input(
 )
 }
 \arguments{
-\item{warp_scale}{}
+\item{gamma_fun}{the gamma function we want to visualize}
+
+\item{n}{grid number}
+
+\item{arrow_color}{default tomatc}
+
+\item{point_color}{default grey40}
+
+\item{warp_scale}{default 1}
+}
+\value{
+a plot
 }
 \description{
 Gamma function plot in [0,1]^2

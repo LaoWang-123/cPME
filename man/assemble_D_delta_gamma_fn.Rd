@@ -7,8 +7,6 @@
 assemble_D_delta_gamma_fn(dgamma_coefs, D_bi_set)
 }
 \arguments{
-\item{dgamma_coefs}{}
-
 \item{D_bi_set}{}
 }
 \value{
