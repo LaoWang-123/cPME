@@ -19,7 +19,7 @@
 #'
 #' @return An object of type pme.
 #' @export
-pme_lk <- function(
+pme <- function(
     data,
     d,
     initialization = NULL,
@@ -432,7 +432,7 @@ calc_coefficients <- function(X, t, weights, w) {
 #'
 #' @return A numeric matrix of parameterizations.
 #'
-#' @noRd
+#' @export
 calc_params <- function(f, X, init_params) {
   params <- purrr::map(1:nrow(X), ~ projection_pme(X[.x, ], f, init_params[.x, ])) %>%
     unlist() %>%

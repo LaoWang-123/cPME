@@ -169,6 +169,15 @@ generate_surface_data <- function(f,
 # ---------------------------------------------------------
 # 1. PME INITIAL GUESS VIA ISOMAP or PCA
 # ---------------------------------------------------------
+#' PME INITIAL GUESS VIA ISOMAP or PCA
+#'
+#' @param X dataset
+#' @param d default=2
+#' @param method method = c("pca","isomap")
+#'
+#' @returns initialization of d embedding
+#' @export
+#'
 pme_initial_guess <- function(X, d, method = c("pca","isomap")) {
 
   method <- match.arg(method)
