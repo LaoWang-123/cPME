@@ -189,76 +189,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// scalar_basis_cpp
-double scalar_basis_cpp(double u, double v, int p, int q);
-RcppExport SEXP _cPME_scalar_basis_cpp(SEXP uSEXP, SEXP vSEXP, SEXP pSEXP, SEXP qSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type u(uSEXP);
-    Rcpp::traits::input_parameter< double >::type v(vSEXP);
-    Rcpp::traits::input_parameter< int >::type p(pSEXP);
-    Rcpp::traits::input_parameter< int >::type q(qSEXP);
-    rcpp_result_gen = Rcpp::wrap(scalar_basis_cpp(u, v, p, q));
-    return rcpp_result_gen;
-END_RCPP
-}
-// grad_basis_cpp
-NumericVector grad_basis_cpp(double u, double v, int p, int q);
-RcppExport SEXP _cPME_grad_basis_cpp(SEXP uSEXP, SEXP vSEXP, SEXP pSEXP, SEXP qSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type u(uSEXP);
-    Rcpp::traits::input_parameter< double >::type v(vSEXP);
-    Rcpp::traits::input_parameter< int >::type p(pSEXP);
-    Rcpp::traits::input_parameter< int >::type q(qSEXP);
-    rcpp_result_gen = Rcpp::wrap(grad_basis_cpp(u, v, p, q));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rot_basis_cpp
-NumericVector rot_basis_cpp(double u, double v, int p, int q);
-RcppExport SEXP _cPME_rot_basis_cpp(SEXP uSEXP, SEXP vSEXP, SEXP pSEXP, SEXP qSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type u(uSEXP);
-    Rcpp::traits::input_parameter< double >::type v(vSEXP);
-    Rcpp::traits::input_parameter< int >::type p(pSEXP);
-    Rcpp::traits::input_parameter< int >::type q(qSEXP);
-    rcpp_result_gen = Rcpp::wrap(rot_basis_cpp(u, v, p, q));
-    return rcpp_result_gen;
-END_RCPP
-}
-// jacobian_grad_cpp
-NumericMatrix jacobian_grad_cpp(double u, double v, int p, int q);
-RcppExport SEXP _cPME_jacobian_grad_cpp(SEXP uSEXP, SEXP vSEXP, SEXP pSEXP, SEXP qSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type u(uSEXP);
-    Rcpp::traits::input_parameter< double >::type v(vSEXP);
-    Rcpp::traits::input_parameter< int >::type p(pSEXP);
-    Rcpp::traits::input_parameter< int >::type q(qSEXP);
-    rcpp_result_gen = Rcpp::wrap(jacobian_grad_cpp(u, v, p, q));
-    return rcpp_result_gen;
-END_RCPP
-}
-// jacobian_rot_cpp
-NumericMatrix jacobian_rot_cpp(double u, double v, int p, int q);
-RcppExport SEXP _cPME_jacobian_rot_cpp(SEXP uSEXP, SEXP vSEXP, SEXP pSEXP, SEXP qSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type u(uSEXP);
-    Rcpp::traits::input_parameter< double >::type v(vSEXP);
-    Rcpp::traits::input_parameter< int >::type p(pSEXP);
-    Rcpp::traits::input_parameter< int >::type q(qSEXP);
-    rcpp_result_gen = Rcpp::wrap(jacobian_rot_cpp(u, v, p, q));
-    return rcpp_result_gen;
-END_RCPP
-}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_cPME_norm_euclidean", (DL_FUNC) &_cPME_norm_euclidean, 1},
@@ -275,11 +205,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cPME_calc_A", (DL_FUNC) &_cPME_calc_A, 3},
     {"_cPME_calc_weights_cpp", (DL_FUNC) &_cPME_calc_weights_cpp, 5},
     {"_cPME_solve_weighted_spline", (DL_FUNC) &_cPME_solve_weighted_spline, 7},
-    {"_cPME_scalar_basis_cpp", (DL_FUNC) &_cPME_scalar_basis_cpp, 4},
-    {"_cPME_grad_basis_cpp", (DL_FUNC) &_cPME_grad_basis_cpp, 4},
-    {"_cPME_rot_basis_cpp", (DL_FUNC) &_cPME_rot_basis_cpp, 4},
-    {"_cPME_jacobian_grad_cpp", (DL_FUNC) &_cPME_jacobian_grad_cpp, 4},
-    {"_cPME_jacobian_rot_cpp", (DL_FUNC) &_cPME_jacobian_rot_cpp, 4},
     {NULL, NULL, 0}
 };
 

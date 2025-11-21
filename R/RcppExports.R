@@ -11,7 +11,7 @@
 #' @return A numeric value.
 #' @export
 norm_euclidean <- function(x) {
-    .Call('_cPME_norm_euclidean', PACKAGE = 'cPME', x)
+    .Call(`_cPME_norm_euclidean`, x)
 }
 
 #' Compute the Euclidean Distance between Vectors
@@ -30,7 +30,7 @@ norm_euclidean <- function(x) {
 #' y <- 91:100
 #' dist_euclidean(x, y)
 dist_euclidean <- function(x, y) {
-    .Call('_cPME_dist_euclidean', PACKAGE = 'cPME', x, y)
+    .Call(`_cPME_dist_euclidean`, x, y)
 }
 
 #' Sum in Logspace
@@ -42,7 +42,7 @@ dist_euclidean <- function(x, y) {
 #' @return A numeric value
 #' @export
 logspace_sum <- function(lx, ly) {
-    .Call('_cPME_logspace_sum', PACKAGE = 'cPME', lx, ly)
+    .Call(`_cPME_logspace_sum`, lx, ly)
 }
 
 #' Difference in Logspace
@@ -54,7 +54,7 @@ logspace_sum <- function(lx, ly) {
 #' @return A numeric value
 #' @export
 logspace_diff <- function(lx, ly) {
-    .Call('_cPME_logspace_diff', PACKAGE = 'cPME', lx, ly)
+    .Call(`_cPME_logspace_diff`, lx, ly)
 }
 
 #' Sum over a Vector in Logspace
@@ -66,7 +66,7 @@ logspace_diff <- function(lx, ly) {
 #' @export
 #'
 logspace_sum_vec <- function(x) {
-    .Call('_cPME_logspace_sum_vec', PACKAGE = 'cPME', x)
+    .Call(`_cPME_logspace_sum_vec`, x)
 }
 
 #' Smoothing Kernel for Density Estimation
@@ -80,7 +80,7 @@ logspace_sum_vec <- function(x) {
 #' @return A numeric value.
 #' @export
 log_smoothing_kernel <- function(x, mu, sigma) {
-    .Call('_cPME_log_smoothing_kernel', PACKAGE = 'cPME', x, mu, sigma)
+    .Call(`_cPME_log_smoothing_kernel`, x, mu, sigma)
 }
 
 #' Documentation Still Needed
@@ -92,7 +92,7 @@ log_smoothing_kernel <- function(x, mu, sigma) {
 #'
 #' @return A numeric value.
 eta_kernel <- function(t, lambda) {
-    .Call('_cPME_eta_kernel', PACKAGE = 'cPME', t, lambda)
+    .Call(`_cPME_eta_kernel`, t, lambda)
 }
 
 #' Documentation Still Needed
@@ -106,7 +106,7 @@ eta_kernel <- function(t, lambda) {
 #' @export
 #'
 calcE <- function(x, lambda) {
-    .Call('_cPME_calcE', PACKAGE = 'cPME', x, lambda)
+    .Call(`_cPME_calcE`, x, lambda)
 }
 
 #' Documentation Still Needed
@@ -121,7 +121,7 @@ calcE <- function(x, lambda) {
 #' @export
 #'
 etaFunc <- function(t, tau, lambda) {
-    .Call('_cPME_etaFunc', PACKAGE = 'cPME', t, tau, lambda)
+    .Call(`_cPME_etaFunc`, t, tau, lambda)
 }
 
 #' Documentation Still Needed
@@ -133,7 +133,7 @@ etaFunc <- function(t, tau, lambda) {
 #'
 #' @return A numeric vector.
 calc_nearest_x <- function(df, x) {
-    .Call('_cPME_calc_nearest_x', PACKAGE = 'cPME', df, x)
+    .Call(`_cPME_calc_nearest_x`, df, x)
 }
 
 #' Documentation Still Needed
@@ -146,7 +146,7 @@ calc_nearest_x <- function(df, x) {
 #'
 #' @return A numeric matrix.
 calc_init_param <- function(df, tnew, nearest_x) {
-    .Call('_cPME_calc_init_param', PACKAGE = 'cPME', df, tnew, nearest_x)
+    .Call(`_cPME_calc_init_param`, df, tnew, nearest_x)
 }
 
 #' Calculate "A" Matrix
@@ -159,7 +159,7 @@ calc_init_param <- function(df, tnew, nearest_x) {
 #'
 #' @return A numeric matrix.
 calc_A <- function(x_obs, mu, sigma) {
-    .Call('_cPME_calc_A', PACKAGE = 'cPME', x_obs, mu, sigma)
+    .Call(`_cPME_calc_A`, x_obs, mu, sigma)
 }
 
 #' Calculate Weights of Mixture Components
@@ -172,7 +172,7 @@ calc_A <- function(x_obs, mu, sigma) {
 #'
 #' @return A numeric vector of weights.
 calc_weights_cpp <- function(x_obs, mu, sigma, epsilon, max_iter) {
-    .Call('_cPME_calc_weights_cpp', PACKAGE = 'cPME', x_obs, mu, sigma, epsilon, max_iter)
+    .Call(`_cPME_calc_weights_cpp`, x_obs, mu, sigma, epsilon, max_iter)
 }
 
 #' Find the Coefficients of a Weighted Spline Function
@@ -188,94 +188,6 @@ calc_weights_cpp <- function(x_obs, mu, sigma, epsilon, max_iter) {
 #' @return A numeric matrix.
 #' @export
 solve_weighted_spline <- function(E, W, t_val, X, w, d, D) {
-    .Call('_cPME_solve_weighted_spline', PACKAGE = 'cPME', E, W, t_val, X, w, d, D)
-}
-
-#' Scalar Fourier basis \eqn{\psi_{pq}(u,v)}.
-#'
-#' Compute the scalar Fourier basis function
-#' \deqn{\psi_{pq}(u,v) = c_{pq}\cos(2\pi p u)\cos(2\pi q v).}
-#'
-#' @param u Numeric value in \[0,1\].
-#' @param v Numeric value in \[0,1\].
-#' @param p Integer Fourier index in the u-direction.
-#' @param q Integer Fourier index in the v-direction.
-#'
-#' @return A numeric scalar.
-#' @export
-scalar_basis_cpp <- function(u, v, p, q) {
-    .Call('_cPME_scalar_basis_cpp', PACKAGE = 'cPME', u, v, p, q)
-}
-
-#' Gradient of Fourier basis \eqn{\nabla\psi_{pq}(u,v)}.
-#'
-#' Computes the gradient:
-#' \deqn{
-#'   \nabla\psi_{pq}(u,v) = \left(
-#'     -c_{pq}(2\pi p)\sin(2\pi p u)\cos(2\pi q v),\;
-#'     -c_{pq}(2\pi q)\cos(2\pi p u)\sin(2\pi q v)
-#'   \right).
-#' }
-#'
-#' @param u Numeric input.
-#' @param v Numeric input.
-#' @param p Integer Fourier index.
-#' @param q Integer Fourier index.
-#'
-#' @return A numeric vector of length 2.
-#' @export
-grad_basis_cpp <- function(u, v, p, q) {
-    .Call('_cPME_grad_basis_cpp', PACKAGE = 'cPME', u, v, p, q)
-}
-
-#' Rotated gradient \eqn{*\nabla\psi_{pq}(u,v)}.
-#'
-#' Computes the 90-degree rotated gradient:
-#' \deqn{
-#'   *\nabla\psi_{pq}(u,v) = \left(
-#'     c_{pq}(2\pi q)\cos(2\pi p u)\sin(2\pi q v),\;
-#'    -c_{pq}(2\pi p)\sin(2\pi p u)\cos(2\pi q v)
-#'   \right).
-#' }
-#'
-#' @param u Numeric input.
-#' @param v Numeric input.
-#' @param p Integer Fourier index.
-#' @param q Integer Fourier index.
-#'
-#' @return A numeric vector of length 2.
-#' @export
-rot_basis_cpp <- function(u, v, p, q) {
-    .Call('_cPME_rot_basis_cpp', PACKAGE = 'cPME', u, v, p, q)
-}
-
-#' Jacobian of gradient field \eqn{D(\nabla\psi_{pq})(u,v)}.
-#'
-#' Computes the 2×2 Jacobian matrix of the gradient field.
-#'
-#' @param u Numeric input.
-#' @param v Numeric input.
-#' @param p Integer Fourier index.
-#' @param q Integer Fourier index.
-#'
-#' @return A 2×2 numeric matrix.
-#' @export
-jacobian_grad_cpp <- function(u, v, p, q) {
-    .Call('_cPME_jacobian_grad_cpp', PACKAGE = 'cPME', u, v, p, q)
-}
-
-#' Jacobian of rotated gradient field \eqn{D(*\nabla\psi_{pq})(u,v)}.
-#'
-#' Computes the 2×2 Jacobian matrix of the rotated gradient.
-#'
-#' @param u Numeric input.
-#' @param v Numeric input.
-#' @param p Integer Fourier index.
-#' @param q Integer Fourier index.
-#'
-#' @return A 2×2 numeric matrix.
-#' @export
-jacobian_rot_cpp <- function(u, v, p, q) {
-    .Call('_cPME_jacobian_rot_cpp', PACKAGE = 'cPME', u, v, p, q)
+    .Call(`_cPME_solve_weighted_spline`, E, W, t_val, X, w, d, D)
 }
 
